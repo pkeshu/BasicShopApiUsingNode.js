@@ -3,7 +3,7 @@ const router=express.Router();
 
 router.get('/',(req,res,next)=>{
     res.status(200).json({
-        message:'Handaling GET request in /orders.'
+        message:'GET request in /orders.'
 
     });
 
