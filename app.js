@@ -5,27 +5,12 @@ const orderRoutes=require('./api/routes/orders')
 const morgan =require('morgan');
 const bodyParser=require('body-parser');
 const mongoose =require('mongoose')
-
-
-// app.use((req,res,next)=>{
-//     res.status(200).json({
-//         message:'its work!'
-//     });
-// });
-
-
-
-
-
 const uri = "mongodb+srv://node-shop:node-shop@node-rest-shop-sjqez.mongodb.net/test?retryWrites=true";
 mongoose.connect(uri,{
     useNewUrlParser: true
 });
-
-
-
+//morgan for wating log in terminal 
 app.use(morgan('dev'));
-
 //using body parse for post method
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -35,20 +20,17 @@ app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control-Allow-Headers",
     "Orign, X-Requested-With,Content-Type,Accept,Authorization");
-
     if(req.method=='OPTIONS'){
         res.header("Access-Control-Allow-Methods",
         "PUT,POST,PATCH,DELETE,GET");
         res.status(200).json({});
     }
     next();
-
 });
-
 //route which should handle request
 app.use('/products',productRoutes );
 app.use('/orders',orderRoutes);
-
+//Error handaling when resources not found or url not found
 app.use((req,res,next)=>{
     const error=new Error("Not Found");
     error.status=404;
