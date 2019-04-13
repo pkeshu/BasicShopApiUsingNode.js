@@ -9,6 +9,9 @@ const uri = "mongodb+srv://node-shop:node-shop@node-rest-shop-sjqez.mongodb.net/
 mongoose.connect(uri,{
     useNewUrlParser: true
 });
+
+//for access image from everywhere
+app.use('/uploads',express.static('uploads'));
 //morgan for wating log in terminal 
 app.use(morgan('dev'));
 //using body parse for post method

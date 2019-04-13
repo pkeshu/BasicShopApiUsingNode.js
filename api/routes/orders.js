@@ -47,7 +47,7 @@ router.get("/", (req, res, next) => {
     .select("_id productId quantity")
 
     //! papulating ref data list using populate('<entity name>')
-    .populate('productId','name')
+    .populate('productId')
     .exec()
     .then(orders => {
       const response = {
