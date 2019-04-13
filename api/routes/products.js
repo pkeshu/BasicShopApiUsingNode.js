@@ -90,7 +90,7 @@ router.get('/:productId', (req, res, next) => {
 
             } else {
                 res.status(404).json({
-                    message: "No valid entry founf for provided ID.",
+                    message: "No valid entry found for provided ID.",
                     request: {
                         type: "GET",
                         url: "http://localhost3000/products/"
@@ -153,3 +153,14 @@ router.delete('/:productId', (req, res, next) => {
 });
 
 module.exports = router;
+
+/*
+
+
+! This code is not working 
+? Is this really working?
+
+TODO hello guys whats going on!
+
+
+*/ 
