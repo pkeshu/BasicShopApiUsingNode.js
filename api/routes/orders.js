@@ -45,6 +45,9 @@ router.post("/", (req, res, next) => {
 router.get("/", (req, res, next) => {
   Order.find()
     .select("_id productId quantity")
+
+    //! papulating ref data list using populate('<entity name>')
+    .populate('productId','name')
     .exec()
     .then(orders => {
       const response = {
@@ -75,6 +78,7 @@ router.get("/:orderId", (req, res, next) => {
   const id = req.params.orderId;
   Order.findById(id)
     .select("_id productId quantity")
+    .populate('productId')
     .exec()
     .then(order => {
       if (!order) {
