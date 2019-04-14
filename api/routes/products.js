@@ -3,8 +3,9 @@ const router = express.Router();
 const Product = require("../models/product");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const CheckAuth=require('../auth/check-auth');
 
-const strge = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "./uploads/");
   },
@@ -22,7 +23,7 @@ const fileFilter =(req,file,cb)=>{
     }
 }
 const upload = multer({
-  storage: strge,
+  storage: storage,
   limits: {
     fileSize: 1024 * 1024 * 10
   },
@@ -59,7 +60,7 @@ router.get("/", (req, res, next) => {
       });
     });
 });
-router.post("/", upload.single("productImage"), (req, res, next) => {
+router.post("/",CheckAuth,upload.single("productImage"), (req, res, next) => {
   // const product ={
   //     name: req.body.name,
   //     price: req.body.price
@@ -96,7 +97,7 @@ router.post("/", upload.single("productImage"), (req, res, next) => {
       });
     });
 });
-router.get("/:productId", (req, res, next) => {
+router.get("/:productId",CheckAuth, (req, res, next) => {
   const id = req.params.productId;
 
   Product.findById(id)
@@ -129,7 +130,7 @@ router.get("/:productId", (req, res, next) => {
       });
     });
 });
-router.patch("/:productId", (req, res, next) => {
+router.patch("/:productId", CheckAuth,(req, res, next) => {
   const id = req.params.productId;
   const updatedOps = {};
   for (const ops of req.body) {
@@ -153,7 +154,7 @@ router.patch("/:productId", (req, res, next) => {
       });
     });
 });
-router.delete("/:productId", (req, res, next) => {
+router.delete("/:productId",CheckAuth, (req, res, next) => {
   const id = req.params.productId;
   Product.remove({ _id: id })
     .exec()
@@ -173,7 +174,7 @@ router.delete("/:productId", (req, res, next) => {
       });
     });
 });
-router.delete('/',(req,res,next)=>{
+router.delete('/',CheckAuth,(req,res,next)=>{
     Product.find()
     .remove()
     .exec()
