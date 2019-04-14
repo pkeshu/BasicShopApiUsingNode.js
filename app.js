@@ -1,7 +1,8 @@
 const express=require('express');
 const app=express();
-const productRoutes=require('./api/routes/products')
-const orderRoutes=require('./api/routes/orders')
+const productRoutes=require('./api/routes/products');
+const orderRoutes=require('./api/routes/orders');
+const userRoutes=require('./api/routes/users');
 const morgan =require('morgan');
 const bodyParser=require('body-parser');
 const mongoose =require('mongoose')
@@ -33,6 +34,7 @@ app.use((req,res,next)=>{
 //route which should handle request
 app.use('/products',productRoutes );
 app.use('/orders',orderRoutes);
+app.use('/',userRoutes);
 //Error handaling when resources not found or url not found
 app.use((req,res,next)=>{
     const error=new Error("Not Found");
